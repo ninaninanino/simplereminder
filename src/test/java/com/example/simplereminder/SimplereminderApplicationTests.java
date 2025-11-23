@@ -13,7 +13,7 @@ class SimplereminderApplicationTests {
 
 	@Test
 	void failOnPurpose() {
-		// ❌ CI가 제대로 동작하는지 보려고 일부러 실패 시키는 테스트
+		// CI가 제대로 동작하는지 보려고 일부러 실패 시키는 테스트
 		Assertions.fail("일부러 실패시킨 테스트입니다.");
 	}
 

@@ -1,0 +1,44 @@
+# 메인 브랜치 push 시 자동테스트
+# .github/workflows/ci.yml
+name: simple-reminder-ci
+#  브랜치 = 같은 레포 안의 여러 작업 줄기
+#  main = 공식 줄기
+#  나머지 = 작업용 가지
+#  push = 내 PC → GitHub 로 커밋 업로드
+#  PR = “이 브랜치 내용을 main에 합치고 싶어요” 요청 (보통 리뷰용)
+#on.push.branches: [main] = main에 push 되면 CI 실행
+#on.pull_request.branches: [main] = main 대상으로 PR 열리면 CI 실행
+#
+#  지금 너는 main + push 만 신경 쓰면 되고,
+#  PR은 나중에 “브랜치 놀이” 시작할 때 알면 돼.
+on:
+  push:
+    branches: [ main ]
+#  pull_request:
+#    branches: [ main ]
+
+jobs:
+  backend-tests:
+    name: Backend (Spring Boot) Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1) GitHub repo 코드 가져오기
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2) JDK 17 세팅
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: gradle
+
+      # 3) gradlew 실행권한 부여 (리눅스에서 필요)
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      # 4) Gradle로 테스트 실행
+      - name: Run tests with Gradle
+        run: ./gradlew clean test
