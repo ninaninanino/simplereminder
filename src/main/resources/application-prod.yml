@@ -5,5 +5,13 @@ spring:
     username: sa
     password:
 
+  jpa:
+    hibernate:
+      ddl-auto: update     #처음 뜰 때 테이블 자동 생성/업데이트
+    show-sql: false        #운영 격이라 SQL 로그는 끄는 게 보통
+  h2:
+    console:
+      enabled: false       #외부 노출이라 콘솔은 끄는 게 안전
+
 server:
-  port: 8080
+  port: ${PORT:8080}       #Render가 환경변수 PORT로 포트를 알려줌
